@@ -23,6 +23,7 @@
   "plugins": [
     "@typescript-eslint",
     "react",
+    "prettier",
     "import-helpers"
   ],
   "ignorePatterns": ["*.js", ".contentlayer", ".next", "node_modules"],
