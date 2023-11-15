@@ -26,18 +26,23 @@
     "prettier",
     "import-helpers"
   ],
-  "ignorePatterns": ["*.js", ".contentlayer", ".next", "node_modules"],
+  "ignorePatterns": [
+    "*.js",
+    ".contentlayer",
+    ".next",
+    "node_modules"
+  ],
   "rules": {
     "prettier/prettier": [
       "error",
       {
-      "printWidth": 80,
-      "tabWidth": 2,
-      "singleQuote": false,
-      "trailingComma": "all",
-      "arrowParens": "always",
-      "semi": true,
-      "OfLine": "auto"
+        "printWidth": 80,
+        "tabWidth": 2,
+        "singleQuote": false,
+        "trailingComma": "all",
+        "arrowParens": "always",
+        "semi": true,
+        "OfLine": "auto"
       }
     ],
     "react/jsx-uses-react": "off",
