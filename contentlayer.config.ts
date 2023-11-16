@@ -16,13 +16,13 @@ export const Post = defineDocumentType(() => ({
   computedFields: {
     url: {
       type: "string",
-      resolve: (post) => `posts/${post._raw.flattenedPath}`,
+      resolve: (post) => post._raw.flattenedPath,
     },
   },
 }));
 
 export default makeSource({
-  contentDirPath: "posts",
+  contentDirPath: "data",
   documentTypes: [Post],
   mdx: {
     remarkPlugins: [remarkGfm, remarkCodeTitle],
