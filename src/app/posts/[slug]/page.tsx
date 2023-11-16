@@ -17,11 +17,13 @@ async function BlogPostPage({ params }: { params: { slug: string } }) {
   if (!post) notFound();
 
   return (
-    <article className="prose dark:prose-invert">
-      <div className="mx-7 my-9 w-full max-w-[1900px]">
-        <MDXComponent post={post} />
-      </div>
-    </article>
+    <div className="mx-9 flex w-full max-w-[1600px]">
+      <article className="prose dark:prose-invert">
+        <div className="mx-7 my-9 w-full max-w-[1900px]">
+          <MDXComponent post={post} />
+        </div>
+      </article>
+    </div>
   );
 }
 

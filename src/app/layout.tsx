@@ -20,7 +20,9 @@ function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head></head>
-      <body className={`${space_grotesk.variable} scroll-smooth bg-gray-950`}>
+      <body
+        className={`${space_grotesk.variable} overflow-x-hidden scroll-smooth bg-gray-950`}
+      >
         <Header />
         {children}
       </body>
