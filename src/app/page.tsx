@@ -1,20 +1,20 @@
 import { allPosts } from "contentlayer/generated";
 import { compareDesc } from "date-fns";
+import React from "react";
 
 import { PostCard } from "~/components/PostCard";
 
 function Home() {
   const posts = allPosts.sort((a, b) =>
-    compareDesc(new Date(a.date), new Date(b.date)),
+    compareDesc(new Date(a.publishedAt), new Date(b.publishedAt)),
   );
 
   return (
-    <div className="mx-auto max-w-xl py-8">
-      <h1 className="mb-8 text-center text-2xl text-white">My blog</h1>
+    <React.Fragment>
       {posts.map((post, idx) => (
         <PostCard key={idx} {...post} />
       ))}
-    </div>
+    </React.Fragment>
   );
 }
 
