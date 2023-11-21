@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="mx-16 mt-6 flex items-center justify-between">
+    <header className="fixed z-10 flex w-screen items-center justify-between bg-gray-400/20 px-16 py-6 backdrop-blur">
       <div className="flex items-center justify-center">
         <span className="mr-2 text-xl font-extrabold text-white">
           ~/tma_blog $

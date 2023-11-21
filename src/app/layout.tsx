@@ -21,12 +21,10 @@ function RootLayout({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head></head>
       <body
-        className={`${space_grotesk.variable} overflow-x-hidden scroll-smooth bg-gray-950`}
+        className={`${space_grotesk.className} overflow-x-hidden scroll-smooth`}
       >
         <Header />
-        <div className="mx-9 flex w-full max-w-[1600px]">
-          {children}  
-        </div>
+        <div className="mx-9 max-w-[1200px] pt-20">{children}</div>
       </body>
     </html>
   );

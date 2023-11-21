@@ -1,6 +1,5 @@
 import { allPosts } from "contentlayer/generated";
 import { compareDesc } from "date-fns";
-import React from "react";
 
 import { PostCard } from "~/components/PostCard";
 
@@ -10,11 +9,14 @@ function Home() {
   );
 
   return (
-    <React.Fragment>
+    <main>
+      <h2 className="mb-3 text-center text-2xl font-extrabold text-gray-100">
+        Posts
+      </h2>
       {posts.map((post, idx) => (
         <PostCard key={idx} {...post} />
       ))}
-    </React.Fragment>
+    </main>
   );
 }
 

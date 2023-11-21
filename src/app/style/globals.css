@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background-image: url("/background-image.png");
+  background-repeat: repeat;
+}
+
 .cursor-block {
   width: 10px;
   height: 1.5em;
