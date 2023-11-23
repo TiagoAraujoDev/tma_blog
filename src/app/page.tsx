@@ -9,14 +9,14 @@ function Home() {
   );
 
   return (
-    <main>
+    <>
       <h2 className="mb-3 text-center text-2xl font-extrabold text-gray-100">
         Posts
       </h2>
       {posts.map((post, idx) => (
         <PostCard key={idx} {...post} />
       ))}
-    </main>
+    </>
   );
 }
 

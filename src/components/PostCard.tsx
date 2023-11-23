@@ -1,14 +1,17 @@
 import { Post } from "contentlayer/generated";
 import { format, parseISO } from "date-fns";
-import Image from "next/image";
 import Link from "next/link";
 
 const PostCard: React.FC<Post> = (post) => {
   return (
-    <div className="mb-8 w-full flex items-center overflow-hidden rounded border border-gray-500 hover:border-blue-500">
-      <Image src={post.imageUrl} width={300} height={400} alt="" />
-      <div>
-        <h2 className="px-4 text-xl">
+    <div className="mb-8 flex h-36 items-center overflow-hidden rounded border border-gray-500 hover:border-blue-500">
+      <img
+        className="hidden md:block md:h-36 md:w-auto"
+        src={post.imageUrl}
+        alt=""
+      />
+      <div className="max-w-full px-4">
+        <h2 className="truncate text-xl">
           <Link
             href={post.url}
             className="font-bold text-gray-100 hover:text-blue-600 dark:text-gray-100"
@@ -16,11 +19,18 @@ const PostCard: React.FC<Post> = (post) => {
             {post.title}
           </Link>
         </h2>
-        <p className="truncate px-4 text-gray-300">{post.description}</p>
-        <time
-          dateTime={post.publishedAt}
-          className="mb-2 block px-4 text-xs text-gray-600"
-        >
+        <div className="mb-2 flex flex-wrap items-center justify-start">
+          {post.tags.map((tag, idx) => (
+            <span
+              key={idx}
+              className="mr-2 text-xs font-bold uppercase text-blue-400"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+        <p className="mb-2 truncate text-gray-300">{post.description}</p>
+        <time dateTime={post.publishedAt} className="text-xs text-gray-400">
           {format(parseISO(post.publishedAt), "LLLL d, yyyy")}
         </time>
       </div>
