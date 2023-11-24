@@ -1,6 +1,7 @@
 import { allPosts } from "contentlayer/generated";
 import { compareDesc } from "date-fns";
 
+import { Hero } from "~/components/Hero";
 import { PostCard } from "~/components/PostCard";
 
 function Home() {
@@ -10,6 +11,7 @@ function Home() {
 
   return (
     <>
+      <Hero />
       <h2 className="mb-3 text-center text-2xl font-extrabold text-gray-100">
         Posts
       </h2>
