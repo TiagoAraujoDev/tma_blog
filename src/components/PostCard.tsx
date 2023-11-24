@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const PostCard: React.FC<Post> = (post) => {
   return (
-    <div className="mb-8 flex h-36 items-center overflow-hidden rounded border border-gray-500 hover:border-blue-500">
+    <div className="mb-8 flex h-36 items-center overflow-hidden rounded border border-gray-500 backdrop-blur-sm hover:border-blue-500">
       <img
         className="hidden md:block md:h-36 md:w-auto"
         src={post.imageUrl}
