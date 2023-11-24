@@ -10,7 +10,7 @@ body {
 .cursor-block {
   width: 10px;
   height: 1.5em;
-  background-color: blue; /* Cursor color */
+  background-color: #3b82f6; /* Cursor color */
 }
 
 /* Add animation and transition utilities */
