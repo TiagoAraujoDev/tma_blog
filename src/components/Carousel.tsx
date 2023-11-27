@@ -8,7 +8,8 @@ import { Dots } from "./Dots";
 type Props = PropsWithChildren & EmblaOptionsType;
 
 const Carousel = ({ children, ...options }: Props) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, [autoPlay()]);
+  // const [emblaRef, emblaApi] = useEmblaCarousel(options, [autoPlay()]);
+  const [emblaRef, emblaApi] = useEmblaCarousel(options);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const Carousel = ({ children, ...options }: Props) => {
   const canScrollNext = !!emblaApi?.canScrollNext();
 
   return (
-    <div className="relative flex w-[600px] flex-col items-center justify-center">
+    <div className="relative flex flex-col items-center justify-center">
       <h2 className="text-center text-2xl font-bold text-gray-200">
         What I talk about?
       </h2>
@@ -38,7 +39,7 @@ const Carousel = ({ children, ...options }: Props) => {
         onPrev={() => emblaApi?.scrollPrev()}
       />
       <div
-        className="flex w-[600px] overflow-hidden rounded bg-stone-700/30 backdrop-blur-sm"
+        className="w-full md:w-[600px] overflow-hidden rounded bg-stone-700/30 backdrop-blur-sm"
         ref={emblaRef}
       >
         <div className="flex">{children}</div>

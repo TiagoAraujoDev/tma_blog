@@ -12,12 +12,14 @@ function Home() {
   return (
     <>
       <Hero />
-      <h2 className="mb-3 text-center text-2xl font-extrabold text-gray-100">
-        Posts
-      </h2>
-      {posts.map((post, idx) => (
-        <PostCard key={idx} {...post} />
-      ))}
+      <div className="mx-6 md:mx-16">
+        <h2 className="mb-3 text-center text-2xl font-extrabold text-gray-100">
+          Posts
+        </h2>
+        {posts.map((post, idx) => (
+          <PostCard key={idx} {...post} />
+        ))}
+        </div>
     </>
   );
 }

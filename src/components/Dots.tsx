@@ -8,7 +8,7 @@ const Dots = ({ itemsLength, selectedIndex }: DotsComponentProps) => {
   const arr = new Array(itemsLength).fill(0);
 
   return (
-    <div className="my-2 flex -translate-y-5 justify-center gap-1">
+    <div className="hidden my-2 md:flex -translate-y-5 justify-center gap-1">
       {arr.map((_, index) => {
         const selected = index === selectedIndex;
         return (
