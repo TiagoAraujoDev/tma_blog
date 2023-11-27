@@ -30,19 +30,19 @@ const logos = [
 
 const CarouselContainer = () => {
   return (
-    <div className="mx-auto my-2">
-      <Carousel align="center" loop>
+    <div className="mx-auto my-2 w-[600px]">
+      <Carousel align="end" loop>
         {logos.map((logo, idx) => {
           return (
             <div
-              className="relative flex h-80 w-auto flex-[0_0_100%] items-center justify-between"
+              className="relative flex h-80 w-[600px] flex-[0_0_100%]"
               key={idx}
             >
               <Image
                 src={logo}
                 width={300}
                 height={300}
-                className="object-cover"
+                className="object-contain"
                 priority
                 alt="alt"
               />

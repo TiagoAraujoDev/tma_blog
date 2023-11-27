@@ -1,3 +1,4 @@
+import autoPlay from "embla-carousel-autoplay";
 import useEmblaCarousel, { EmblaOptionsType } from "embla-carousel-react";
 import React, { PropsWithChildren, useEffect, useState } from "react";
 
@@ -7,7 +8,7 @@ import { Dots } from "./Dots";
 type Props = PropsWithChildren & EmblaOptionsType;
 
 const Carousel = ({ children, ...options }: Props) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel(options);
+  const [emblaRef, emblaApi] = useEmblaCarousel(options, [autoPlay()]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
@@ -27,15 +28,17 @@ const Carousel = ({ children, ...options }: Props) => {
   const canScrollNext = !!emblaApi?.canScrollNext();
 
   return (
-    <div className="relative">
-      <h2 className="text-2xl text-center font-bold text-gray-200">What I talk about?</h2>
+    <div className="relative flex w-[600px] flex-col items-center justify-center">
+      <h2 className="text-center text-2xl font-bold text-gray-200">
+        What I talk about?
+      </h2>
       <CarouselControls
         type="left"
         canScrollPrev={canScrollPrev}
         onPrev={() => emblaApi?.scrollPrev()}
       />
       <div
-        className="flex w-[300px] overflow-hidden rounded bg-stone-700/30 backdrop-blur-sm"
+        className="flex w-[600px] overflow-hidden rounded bg-stone-700/30 backdrop-blur-sm"
         ref={emblaRef}
       >
         <div className="flex">{children}</div>

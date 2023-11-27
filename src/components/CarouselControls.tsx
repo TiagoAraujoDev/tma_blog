@@ -10,7 +10,7 @@ interface CarouselControlsProps {
 
 const CarouselControls = (props: CarouselControlsProps) => {
   return (
-    <div className="flex items-center justify-center">
+    <>
       {props.type === "left" ? (
         <button
           onClick={() => {
@@ -36,7 +36,7 @@ const CarouselControls = (props: CarouselControlsProps) => {
           <FiArrowRightCircle className="h-6 w-6 text-blue-400" />
         </button>
       )}
-    </div>
+    </>
   );
 };
 export { CarouselControls };
