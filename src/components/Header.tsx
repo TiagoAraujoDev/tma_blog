@@ -12,16 +12,24 @@ const Header = () => {
       <nav className="hidden md:block">
         <ul className="flex items-center justify-center gap-4">
           <li className="cursor-pointer border-b border-transparent font-semibold text-white transition hover:border-b hover:border-blue-500">
-            <Link href="/">Home</Link>
+            <Link href="/" title="Home">
+              Home
+            </Link>
           </li>
           <li className="ktransition cursor-pointer border-b border-transparent font-semibold text-white hover:border-b hover:border-blue-500">
-            <Link href="/blog">Blog</Link>
+            <Link href="/blog" title="Blog">
+              Blog
+            </Link>
           </li>
           <li className="cursor-pointer border-b border-transparent font-semibold text-white transition hover:border-b hover:border-blue-500">
-            <Link href="/projects">Projects</Link>
+            <Link href="/projects" title="Projects">
+              Projects
+            </Link>
           </li>
           <li className="cursor-pointer border-b border-transparent font-semibold text-white transition hover:border-b hover:border-blue-500">
-            <Link href="/about">About</Link>
+            <Link href="/about" title="About">
+              About
+            </Link>
           </li>
         </ul>
       </nav>

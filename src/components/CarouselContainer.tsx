@@ -5,10 +5,10 @@ import Image from "next/image";
 import { Carousel } from "./Carousel";
 
 const logos = [
+  "/logos/shell_script.png",
+  "/logos/node.png",
   "/logos/archlinux.png",
   "/logos/hack.png",
-  "/logos/node.png",
-  "/logos/shell_script.png",
   "/logos/java.png",
   "/logos/nextjs.png",
   "/logos/react.png",
@@ -21,6 +21,8 @@ const logos = [
   "/logos/linux.png",
   "/logos/lua.png",
   "/logos/python.png",
+  "/logos/prisma.png",
+  "/logos/typeorm.png",
   "/logos/mongodb.png",
   "/logos/aws.png",
   "/logos/docker.png",
@@ -34,15 +36,12 @@ const CarouselContainer = () => {
       <Carousel align="center" loop>
         {logos.map((logo, idx) => {
           return (
-            <div
-              className="min-w-0 h-80 flex-[0_0_100%]"
-              key={idx}
-            >
+            <div className="h-80 min-w-0 flex-[0_0_100%]" key={idx}>
               <Image
                 src={logo}
                 width={300}
                 height={300}
-                className="object-contain mx-auto h-80"
+                className="mx-auto h-80 object-contain"
                 priority
                 alt="alt"
               />

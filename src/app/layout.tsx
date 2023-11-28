@@ -24,7 +24,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
         className={`${space_grotesk.className} overflow-x-hidden scroll-smooth`}
       >
         <Header />
-        <main className="max-w-[1280px] mx-auto pt-20">{children}</main>
+        <main className="mx-auto max-w-[1280px] pt-20">{children}</main>
       </body>
     </html>
   );

@@ -19,7 +19,7 @@ function Home() {
         {posts.map((post, idx) => (
           <PostCard key={idx} {...post} />
         ))}
-        </div>
+      </div>
     </>
   );
 }

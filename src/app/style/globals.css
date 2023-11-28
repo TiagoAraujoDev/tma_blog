@@ -3,8 +3,10 @@
 @tailwind utilities;
 
 body {
-  background-image: url("/background-image.png");
-  background-repeat: repeat;
+  background-size: "100px 100px";
+  background-image: url("/bg-grid.png");
+  background-color: #030712;
+  background-position-y: "-9px";
 }
 
 .cursor-block {
@@ -22,9 +24,9 @@ body {
 /* Define the blink animation */
 @keyframes blink {
   0%, 50%, 100% {
-      opacity: 1;
+    opacity: 1;
   }
   25%, 75% {
-      opacity: 0;
+    opacity: 0;
   }
 }

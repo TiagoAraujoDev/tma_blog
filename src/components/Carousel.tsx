@@ -8,8 +8,7 @@ import { Dots } from "./Dots";
 type Props = PropsWithChildren & EmblaOptionsType;
 
 const Carousel = ({ children, ...options }: Props) => {
-  // const [emblaRef, emblaApi] = useEmblaCarousel(options, [autoPlay()]);
-  const [emblaRef, emblaApi] = useEmblaCarousel(options);
+  const [emblaRef, emblaApi] = useEmblaCarousel(options, [autoPlay()]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
@@ -39,7 +38,7 @@ const Carousel = ({ children, ...options }: Props) => {
         onPrev={() => emblaApi?.scrollPrev()}
       />
       <div
-        className="w-full md:w-[600px] overflow-hidden rounded bg-stone-700/30 backdrop-blur-sm"
+        className="w-full overflow-hidden rounded bg-stone-700/30 backdrop-blur-sm md:w-[600px]"
         ref={emblaRef}
       >
         <div className="flex">{children}</div>
