@@ -4,9 +4,9 @@ import Link from "next/link";
 
 const PostCard: React.FC<Post> = (post) => {
   return (
-    <div className="mb-8 flex h-36 items-center overflow-hidden rounded border border-gray-500 backdrop-blur-sm hover:border-blue-500">
+    <div className="mb-8 flex h-auto w-full items-center overflow-hidden rounded border border-gray-500 bg-stone-700/30 backdrop-blur-sm hover:border-blue-500">
       <img
-        className="hidden md:block md:h-36 md:w-auto"
+        className="hidden w-60 object-contain md:block"
         src={post.imageUrl}
         alt=""
       />
@@ -29,7 +29,9 @@ const PostCard: React.FC<Post> = (post) => {
             </span>
           ))}
         </div>
-        <p className="mb-2 truncate text-gray-300">{post.description}</p>
+        <p className="mb-2 max-w-4xl truncate text-gray-300">
+          {post.description}
+        </p>
         <time dateTime={post.publishedAt} className="text-xs text-gray-400">
           {format(parseISO(post.publishedAt), "LLLL d, yyyy")}
         </time>

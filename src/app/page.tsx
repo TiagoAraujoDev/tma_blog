@@ -10,17 +10,18 @@ function Home() {
   );
 
   return (
-    <>
+    <div className="mx-8">
       <Hero />
-      <div className="mx-6 md:mx-16">
-        <h2 className="mb-3 text-center text-2xl font-extrabold text-gray-100">
-          Posts
+      <div className="mb-16 h-[1px] w-full bg-gray-400" />
+      <div className="">
+        <h2 className="mb-8 text-4xl font-extrabold text-gray-100">
+          Latest posts
         </h2>
         {posts.map((post, idx) => (
           <PostCard key={idx} {...post} />
         ))}
       </div>
-    </>
+    </div>
   );
 }
 

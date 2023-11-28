@@ -27,7 +27,6 @@ const logos = [
   "/logos/aws.png",
   "/logos/docker.png",
   "/logos/postgresql.png",
-  "/logos/info_sec.jpg",
 ];
 
 const CarouselContainer = () => {
