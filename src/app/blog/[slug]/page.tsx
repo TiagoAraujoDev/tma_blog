@@ -14,7 +14,7 @@ async function BlogPostPage({ params }: { params: { slug: string } }) {
 
   return (
     <article className="prose dark:prose-invert">
-      <div className="mx-10">
+      <div className="md:ml-8">
         <MDXComponent post={post} />
       </div>
     </article>
