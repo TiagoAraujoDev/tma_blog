@@ -29,7 +29,7 @@ const Carousel = ({ children, ...options }: Props) => {
 
   return (
     <div className="relative flex flex-col items-center justify-center">
-      <h2 className="text-center text-2xl font-bold text-gray-200">
+      <h2 className="mb-4 text-center text-2xl font-bold text-gray-800 dark:text-gray-200">
         What I talk about?
       </h2>
       <CarouselControls
@@ -38,7 +38,7 @@ const Carousel = ({ children, ...options }: Props) => {
         onPrev={() => emblaApi?.scrollPrev()}
       />
       <div
-        className="w-full overflow-hidden rounded bg-stone-700/30 backdrop-blur-sm md:w-[600px]"
+        className="w-full overflow-hidden rounded bg-stone-200/30 shadow-lg shadow-gray-700 backdrop-blur-sm dark:bg-stone-700/30 md:w-[600px]"
         ref={emblaRef}
       >
         <div className="flex">{children}</div>

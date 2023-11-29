@@ -16,22 +16,22 @@ const NavBar = () => {
     <nav className="block">
       {width >= 1024 ? (
         <ul className="flex items-center justify-center gap-4">
-          <li className="cursor-pointer border-b border-transparent font-semibold text-white transition hover:border-b hover:border-blue-500">
+          <li className="cursor-pointer border-b border-transparent font-semibold text-gray-800 transition hover:border-b hover:border-blue-500 dark:text-white">
             <Link href="/" title="Home">
               Home
             </Link>
           </li>
-          <li className="cursor-pointer border-b border-transparent font-semibold text-white hover:border-b hover:border-blue-500">
+          <li className="cursor-pointer border-b border-transparent font-semibold text-gray-800 hover:border-b hover:border-blue-500 dark:text-white">
             <Link href="/blog" title="Blog">
               Blog
             </Link>
           </li>
-          <li className="cursor-pointer border-b border-transparent font-semibold text-white transition hover:border-b hover:border-blue-500">
+          <li className="cursor-pointer border-b border-transparent font-semibold text-gray-800 transition hover:border-b hover:border-blue-500 dark:text-white">
             <Link href="/projects" title="Projects">
               Projects
             </Link>
           </li>
-          <li className="cursor-pointer border-b border-transparent font-semibold text-white transition hover:border-b hover:border-blue-500">
+          <li className="cursor-pointer border-b border-transparent font-semibold text-gray-800 transition hover:border-b hover:border-blue-500 dark:text-white">
             <Link href="/about" title="About">
               About
             </Link>
@@ -46,12 +46,12 @@ const NavBar = () => {
           </Dialog.Trigger>
           <Dialog.Portal>
             <Dialog.Overlay />
-            <Dialog.Content className="fixed right-0 top-0 z-40 h-screen w-screen bg-gray-900">
+            <Dialog.Content className="fixed right-0 top-0 z-40 h-screen w-screen bg-gray-100/70 backdrop-blur-sm dark:bg-gray-900/30">
               <div className="flex flex-col items-center">
                 {/* Menu header */}
                 <div className="flex w-full items-center justify-between px-10 py-6">
                   <div className="flex items-center justify-center">
-                    <span className="mr-2 text-xl font-extrabold text-white">
+                    <span className="mr-2 text-xl font-extrabold text-gray-900 dark:text-white">
                       <span className="text-blue-400">~</span>/tma_blog $
                     </span>
                     <span className="cursor-block" />
@@ -68,22 +68,22 @@ const NavBar = () => {
                 {/* <div className="mb-16 h-[1px] w-full bg-gray-500 mx-3" /> */}
 
                 <ul className="flex w-full flex-col items-center justify-center px-10">
-                  <li className="w-full cursor-pointer border-y border-gray-600 py-6 text-center font-semibold text-white">
+                  <li className="w-full cursor-pointer border-y border-gray-600 py-6 text-center font-semibold text-gray-900 dark:text-white">
                     <Link href="/" title="Home">
                       Home
                     </Link>
                   </li>
-                  <li className="w-full cursor-pointer border-b border-gray-600 py-6 text-center font-semibold text-white">
+                  <li className="w-full cursor-pointer border-b border-gray-600 py-6 text-center font-semibold text-gray-900 dark:text-white">
                     <Link href="/blog" title="Blog">
                       Blog
                     </Link>
                   </li>
-                  <li className="w-full cursor-pointer border-b border-gray-600 py-6 text-center font-semibold text-white">
+                  <li className="w-full cursor-pointer border-b border-gray-600 py-6 text-center font-semibold text-gray-900 dark:text-white">
                     <Link href="/projects" title="Projects">
                       Projects
                     </Link>
                   </li>
-                  <li className="w-full cursor-pointer border-b border-gray-600 py-6 text-center font-semibold text-white">
+                  <li className="w-full cursor-pointer border-b border-gray-600 py-6 text-center font-semibold text-gray-900 dark:text-white">
                     <Link href="/about" title="About">
                       About
                     </Link>
