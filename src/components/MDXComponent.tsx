@@ -1,10 +1,10 @@
 "use client";
 
-import { Post } from "contentlayer/generated";
+import { Blog } from "contentlayer/generated";
 import { useMDXComponent } from "next-contentlayer/hooks";
 
 interface MDXComponentProps {
-  post: Post;
+  post: Blog;
 }
 
 const MDXComponent = ({ post }: MDXComponentProps) => {
