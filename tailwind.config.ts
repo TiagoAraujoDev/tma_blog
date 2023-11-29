@@ -23,6 +23,9 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-space-grotesk)", ...fontFamily.sans],
       },
+      gridTemplateColumns: {
+        layout: "200px 1fr",
+      },
       typography: ({ theme }: ThemeConfig) => ({
         DEFAULT: {
           css: {

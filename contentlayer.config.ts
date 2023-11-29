@@ -5,8 +5,8 @@ import rehypeSlug from "rehype-slug";
 import remarkCodeTitle from "remark-code-title";
 import remarkGfm from "remark-gfm";
 
-export const Post = defineDocumentType(() => ({
-  name: "Post",
+export const Blog = defineDocumentType(() => ({
+  name: "Blog",
   filePathPattern: "**/*.mdx",
   contentType: "mdx",
   fields: {
@@ -19,19 +19,19 @@ export const Post = defineDocumentType(() => ({
       of: { type: "string" },
       default: [],
     },
-    imageUrl: { type: "string", required: true }
+    imageUrl: { type: "string", required: true },
   },
   computedFields: {
     url: {
       type: "string",
-      resolve: (post) => post._raw.flattenedPath,
+      resolve: (doc) => doc._raw.flattenedPath,
     },
   },
 }));
 
 export default makeSource({
   contentDirPath: "data",
-  documentTypes: [Post],
+  documentTypes: [Blog],
   mdx: {
     remarkPlugins: [remarkGfm, remarkCodeTitle],
     rehypePlugins: [

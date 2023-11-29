@@ -40,7 +40,7 @@ const CarouselContainer = () => {
                 src={logo}
                 width={300}
                 height={300}
-                className="mx-auto h-80 object-contain"
+                className="mx-auto my-2 h-72 w-auto object-contain"
                 priority
                 alt="alt"
               />

@@ -40,7 +40,9 @@ const NavBar = () => {
       ) : (
         <Dialog.Root>
           <Dialog.Trigger asChild>
-            <MdMenu className="h-6 w-6 text-blue-400" />
+            <button>
+              <MdMenu className="h-6 w-6 text-blue-400" />
+            </button>
           </Dialog.Trigger>
           <Dialog.Portal>
             <Dialog.Overlay />

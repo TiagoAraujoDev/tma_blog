@@ -1,8 +1,8 @@
-import { Post } from "contentlayer/generated";
+import { Blog } from "contentlayer/generated";
 import { format, parseISO } from "date-fns";
 import Link from "next/link";
 
-const PostCard: React.FC<Post> = (post) => {
+const PostCard: React.FC<Blog> = (post) => {
   return (
     <div className="mb-8 flex h-auto w-full items-center overflow-hidden rounded border border-gray-500 bg-stone-700/30 backdrop-blur-sm hover:border-blue-500">
       <img
@@ -11,7 +11,7 @@ const PostCard: React.FC<Post> = (post) => {
         alt=""
       />
       <div className="max-w-full px-4">
-        <h2 className="truncate text-xl">
+        <h2 className="truncate text-xl text-gray-100">
           <Link
             href={post.url}
             className="font-bold text-gray-100 hover:text-blue-600 dark:text-gray-100"
@@ -29,9 +29,7 @@ const PostCard: React.FC<Post> = (post) => {
             </span>
           ))}
         </div>
-        <p className="mb-2 max-w-4xl truncate text-gray-300">
-          {post.description}
-        </p>
+        <p className="mb-2 truncate text-gray-300">{post.description}</p>
         <time dateTime={post.publishedAt} className="text-xs text-gray-400">
           {format(parseISO(post.publishedAt), "LLLL d, yyyy")}
         </time>

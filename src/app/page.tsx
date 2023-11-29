@@ -1,11 +1,11 @@
-import { allPosts } from "contentlayer/generated";
+import { allBlogs } from "contentlayer/generated";
 import { compareDesc } from "date-fns";
 
 import { Hero } from "~/components/Hero";
 import { PostCard } from "~/components/PostCard";
 
 function Home() {
-  const posts = allPosts.sort((a, b) =>
+  const posts = allBlogs.sort((a, b) =>
     compareDesc(new Date(a.publishedAt), new Date(b.publishedAt)),
   );
 
