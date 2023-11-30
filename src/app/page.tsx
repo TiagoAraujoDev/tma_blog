@@ -5,12 +5,14 @@ import Link from "next/link";
 import { Hero } from "~/components/Hero";
 import { PostCard } from "~/components/PostCard";
 
+const LATEST_POSTS_QUANTITY = 5;
+
 function Home() {
-  const posts = allBlogs
+  const latestBlogposts = allBlogs
     .sort((a, b) =>
       compareDesc(new Date(a.publishedAt), new Date(b.publishedAt)),
     )
-    .slice(0, 5);
+    .slice(0, LATEST_POSTS_QUANTITY);
 
   return (
     <div className="mx-8">
@@ -19,7 +21,7 @@ function Home() {
         <h2 className="mb-8 text-4xl font-extrabold text-gray-900 dark:text-gray-100">
           Latest posts
         </h2>
-        {posts.map((post, idx) => (
+        {latestBlogposts.map((post, idx) => (
           <PostCard key={idx} {...post} />
         ))}
         <Link
