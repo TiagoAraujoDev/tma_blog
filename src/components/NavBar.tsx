@@ -2,6 +2,7 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import Link from "next/link";
+import { useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { MdMenu } from "react-icons/md";
@@ -11,6 +12,7 @@ import { useWindowSize } from "~/hooks/useWindowSize";
 
 const NavBar = () => {
   const [width] = useWindowSize();
+  const [open, setOpen] = useState(false);
 
   return (
     <nav className="block">
@@ -38,7 +40,7 @@ const NavBar = () => {
           </li>
         </ul>
       ) : (
-        <Dialog.Root>
+        <Dialog.Root open={open} onOpenChange={setOpen}>
           <Dialog.Trigger asChild>
             <button>
               <MdMenu className="h-6 w-6 text-blue-400" />
@@ -46,9 +48,8 @@ const NavBar = () => {
           </Dialog.Trigger>
           <Dialog.Portal>
             <Dialog.Overlay />
-            <Dialog.Content className="fixed right-0 top-0 z-40 h-screen w-screen bg-gray-100/70 backdrop-blur-sm dark:bg-gray-900/30">
+            <Dialog.Content className="fixed right-0 top-0 z-40 h-screen w-screen bg-gray-100/70 backdrop-blur-sm dark:bg-gray-900/70">
               <div className="flex flex-col items-center">
-                {/* Menu header */}
                 <div className="flex w-full items-center justify-between px-10 py-6">
                   <div className="flex items-center justify-center">
                     <span className="mr-2 text-xl font-extrabold text-gray-900 dark:text-white">
@@ -63,33 +64,40 @@ const NavBar = () => {
                     />
                   </Dialog.Close>
                 </div>
-
-                {/* divider */}
-                {/* <div className="mb-16 h-[1px] w-full bg-gray-500 mx-3" /> */}
-
                 <ul className="flex w-full flex-col items-center justify-center px-10">
                   <li className="w-full cursor-pointer border-y border-gray-600 py-6 text-center font-semibold text-gray-900 dark:text-white">
-                    <Link href="/" title="Home">
+                    <Link href="/" onClick={() => setOpen(false)} title="Home">
                       Home
                     </Link>
                   </li>
                   <li className="w-full cursor-pointer border-b border-gray-600 py-6 text-center font-semibold text-gray-900 dark:text-white">
-                    <Link href="/blog" title="Blog">
+                    <Link
+                      href="/blog"
+                      onClick={() => setOpen(false)}
+                      title="Blog"
+                    >
                       Blog
                     </Link>
                   </li>
                   <li className="w-full cursor-pointer border-b border-gray-600 py-6 text-center font-semibold text-gray-900 dark:text-white">
-                    <Link href="/projects" title="Projects">
+                    <Link
+                      href="/projects"
+                      onClick={() => setOpen(false)}
+                      title="Projects"
+                    >
                       Projects
                     </Link>
                   </li>
                   <li className="w-full cursor-pointer border-b border-gray-600 py-6 text-center font-semibold text-gray-900 dark:text-white">
-                    <Link href="/about" title="About">
+                    <Link
+                      href="/about"
+                      onClick={() => setOpen(false)}
+                      title="About"
+                    >
                       About
                     </Link>
                   </li>
                 </ul>
-                {/* social */}
                 <div className="mt-8 flex items-center justify-center gap-2 lg:justify-start">
                   <Link
                     href="https://github.com/TiagoAraujoDev"
