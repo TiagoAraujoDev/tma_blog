@@ -1,4 +1,4 @@
-import "~/app/style/prism.css";
+import "~/style/prism.css";
 
 import { allBlogs } from "contentlayer/generated";
 import { notFound } from "next/navigation";

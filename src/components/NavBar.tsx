@@ -42,7 +42,7 @@ const NavBar = () => {
       ) : (
         <Dialog.Root open={open} onOpenChange={setOpen}>
           <Dialog.Trigger asChild>
-            <button>
+            <button className="flex items-center justify-center">
               <MdMenu className="h-6 w-6 text-blue-400" />
             </button>
           </Dialog.Trigger>
