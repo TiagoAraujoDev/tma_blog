@@ -12,7 +12,6 @@ function Home() {
   return (
     <div className="mx-8">
       <Hero />
-      {/* <div className="mb-16 h-[1px] w-full bg-gray-400" /> */}
       <div className="">
         <h2 className="mb-8 text-4xl font-extrabold text-gray-900 dark:text-gray-100">
           Latest posts
