@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 
+import { Footer } from "~/components/Footer";
 import { Header } from "~/components/Header";
 
 import "./style/globals.css";
@@ -25,6 +26,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
       >
         <Header />
         <main className="mx-auto w-full max-w-[1280px] pt-20">{children}</main>
+        <Footer />
       </body>
     </html>
   );
