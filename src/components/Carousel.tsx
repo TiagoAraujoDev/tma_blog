@@ -38,7 +38,7 @@ const Carousel = ({ children, ...options }: Props) => {
         onPrev={() => emblaApi?.scrollPrev()}
       />
       <div
-        className="w-full overflow-hidden rounded bg-stone-200/30 shadow-lg shadow-gray-700 backdrop-blur-sm dark:bg-stone-700/30 dark:shadow-sm dark:shadow-gray-900 md:w-[600px]"
+        className="w-full overflow-hidden rounded bg-stone-200/30 shadow-lg shadow-gray-700 backdrop-blur-sm dark:bg-stone-700/30 dark:shadow-lg dark:shadow-black md:w-[600px]"
         ref={emblaRef}
       >
         <div className="flex">{children}</div>
