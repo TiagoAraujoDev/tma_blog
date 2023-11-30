@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* TODO: min-height 100vh - footer */
+
 .bg-grid {
   background-size: 100px 100px;
   background-image: url("/bg-grid.png");
