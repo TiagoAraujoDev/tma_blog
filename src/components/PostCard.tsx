@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const PostCard: React.FC<Blog> = (post) => {
   return (
-    <div className="mb-8 flex h-auto w-full items-center overflow-hidden rounded border border-gray-500 bg-stone-300/30 shadow-lg shadow-gray-700 backdrop-blur-sm hover:border-blue-500 dark:bg-stone-700/30">
+    <div className="mb-8 flex h-auto w-full items-center overflow-hidden rounded border border-gray-500 bg-stone-300/30 shadow-lg shadow-gray-700 backdrop-blur-sm hover:border-blue-500 dark:bg-stone-700/30 dark:shadow-md dark:shadow-gray-900">
       <img
         className="hidden w-60 object-contain md:block"
         src={post.imageUrl}
