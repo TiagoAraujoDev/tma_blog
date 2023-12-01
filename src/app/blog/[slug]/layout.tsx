@@ -1,6 +1,7 @@
 import { allBlogs } from "contentlayer/generated";
 import { format, parseISO } from "date-fns";
 import Link from "next/link";
+import { Button } from "~/components/Button";
 
 interface PostLayoutProps {
   children: React.ReactNode;
@@ -84,9 +85,7 @@ async function PostLayout({ children, params }: PostLayoutProps) {
             </div>
           </div>
           <div className="h-6 w-auto pt-6">
-            <Link href="/blog" className="h-6 rounded bg-blue-400 p-2">
-              Back to blogs
-            </Link>
+            <Button text="Back to blog" />
           </div>
         </aside>
         <div>{children}</div>
