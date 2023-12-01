@@ -11,8 +11,8 @@ const PostCard: React.FC<Blog> = (post) => {
       hover:border-blue-500 dark:bg-stone-700/30 dark:shadow-lg dark:shadow-black
       "
     >
-      <div className="min-w-60 hidden md:block">
-        <img className="object-cover" src={post.imageUrl} alt="" />
+      <div className="hidden h-auto w-60 flex-1 md:block">
+        <img className="object-contain" src={post.imageUrl} alt="" />
       </div>
       <div className="w-full max-w-4xl px-4 py-2">
         <h2 className="truncate text-xl text-gray-100">
