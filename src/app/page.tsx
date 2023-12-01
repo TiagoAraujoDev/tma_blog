@@ -17,7 +17,7 @@ function Home() {
   return (
     <div className="mx-8">
       <Hero />
-      <div className="">
+      <section>
         <h2 className="mb-8 text-4xl font-extrabold text-gray-900 dark:text-gray-100">
           Latest posts
         </h2>
@@ -25,7 +25,7 @@ function Home() {
           <PostCard key={idx} {...post} />
         ))}
         <Button text="See all posts" />
-      </div>
+      </section>
     </div>
   );
 }

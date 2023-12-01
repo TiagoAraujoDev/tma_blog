@@ -6,20 +6,17 @@ const PostCard: React.FC<Blog> = (post) => {
   return (
     <div
       className="
-      mb-8 flex h-auto w-full items-center justify-start overflow-hidden rounded border
+      mb-8 flex w-full items-center overflow-hidden rounded border
       border-gray-500 bg-stone-300/30 shadow-lg shadow-gray-700 backdrop-blur-sm
       hover:border-blue-500 dark:bg-stone-700/30 dark:shadow-lg dark:shadow-black
       "
     >
-      <div className="hidden h-auto w-60 flex-1 md:block">
+      <div className="hidden h-auto w-60 flex-none md:block">
         <img className="object-contain" src={post.imageUrl} alt="" />
       </div>
-      <div className="w-full max-w-4xl px-4 py-2">
-        <h2 className="truncate text-xl text-gray-100">
-          <Link
-            href={post.url}
-            className="font-bold text-gray-900 hover:text-blue-600 dark:text-gray-100"
-          >
+      <div className="w-52 flex-1 px-4 py-2">
+        <h2 className="truncate text-xl text-gray-900 hover:text-blue-600 dark:text-gray-100">
+          <Link href={post.url} className="font-bold">
             {post.title}
           </Link>
         </h2>
