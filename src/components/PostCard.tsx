@@ -4,13 +4,19 @@ import Link from "next/link";
 
 const PostCard: React.FC<Blog> = (post) => {
   return (
-    <div className="mb-8 flex h-auto w-full items-center overflow-hidden rounded border border-gray-500 bg-stone-300/30 shadow-lg shadow-gray-700 backdrop-blur-sm hover:border-blue-500 dark:bg-stone-700/30 dark:shadow-lg dark:shadow-black">
+    <div
+      className="
+      mb-8 flex h-auto w-full items-center justify-start overflow-hidden rounded border
+      border-gray-500 bg-stone-300/30 shadow-lg shadow-gray-700 backdrop-blur-sm
+      hover:border-blue-500 dark:bg-stone-700/30 dark:shadow-lg dark:shadow-black
+      "
+    >
       <img
         className="hidden w-60 object-contain md:block"
         src={post.imageUrl}
         alt=""
       />
-      <div className="max-w-full px-4 py-2">
+      <div className="max-w-4xl px-4 py-2">
         <h2 className="truncate text-xl text-gray-100">
           <Link
             href={post.url}
@@ -29,7 +35,7 @@ const PostCard: React.FC<Blog> = (post) => {
             </span>
           ))}
         </div>
-        <p className="mb-2 truncate text-gray-700 dark:text-gray-300">
+        <p className="mb-2 text-gray-700 dark:text-gray-300">
           {post.description}
         </p>
         <time
