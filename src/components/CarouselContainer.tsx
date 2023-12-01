@@ -42,7 +42,7 @@ const CarouselContainer = () => {
                 height={300}
                 className="mx-auto my-2 h-72 w-auto object-contain"
                 priority
-                alt="alt"
+                alt=""
               />
             </div>
           );
