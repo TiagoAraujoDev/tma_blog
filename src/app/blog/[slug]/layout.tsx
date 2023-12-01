@@ -1,6 +1,7 @@
 import { allBlogs } from "contentlayer/generated";
 import { format, parseISO } from "date-fns";
 import Link from "next/link";
+
 import { Button } from "~/components/Button";
 
 interface PostLayoutProps {
