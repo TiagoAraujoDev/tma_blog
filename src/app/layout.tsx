@@ -23,11 +23,11 @@ function RootLayout({ children }: { children: React.ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <head></head>
       <body
-        className={`${space_grotesk.className} dark:bg-grid overflow-x-hidden scroll-smooth bg-gray-50 dark:bg-gray-950`}
+        className={`${space_grotesk.className} overflow-x-hidden scroll-smooth bg-gray-50 dark:bg-gray-950`}
       >
         <ThemeProviders>
           <Header />
-          <main className="mx-auto w-full max-w-[1280px] pt-20">
+          <main className="mx-auto w-full max-w-[1280px] pt-[72px]">
             {children}
           </main>
           <Footer />

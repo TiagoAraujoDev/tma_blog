@@ -9,7 +9,7 @@ function BlogPage() {
   );
 
   return (
-    <div className="mx-8">
+    <div className="min-height mx-8">
       <div className="pt-4">
         <h2 className="mb-8 text-4xl font-extrabold text-gray-900 dark:text-gray-100">
           Blog posts

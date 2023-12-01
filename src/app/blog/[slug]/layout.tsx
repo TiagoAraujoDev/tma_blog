@@ -15,7 +15,7 @@ async function PostLayout({ children, params }: PostLayoutProps) {
   );
 
   return (
-    <section className="mx-4 sm:mx-8 md:mx-10">
+    <section className="min-height mx-4 sm:mx-8 md:mx-10">
       <div className="flex flex-col items-center pt-8">
         <time
           dateTime={post?.publishedAt}

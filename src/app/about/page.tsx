@@ -1,16 +1,39 @@
-import { MdOutlineConstruction } from "react-icons/md";
-function AboutPage() {
+import Image from "next/image";
+import Link from "next/link";
+
+import { UnderConstructionWarn } from "~/components/UnderConstructionWarn";
+
+async function getGithubProfile() {
+  const response = await fetch("https://api.github.com/users/TiagoAraujoDev");
+  const data = await response.json();
+
+  return data;
+}
+
+async function AboutPage() {
+  const data = await getGithubProfile();
+  console.log(data);
   return (
-    <div>
-      <div className="absolute top-[72px] flex w-full items-center justify-center gap-2 bg-yellow-500 p-2">
-        <MdOutlineConstruction className="h-8 w-8 text-gray-200" />
-        <p className="font-extrabold text-gray-200">
-          Page under heavily construction
-        </p>
+    <div className="min-height flex flex-col items-center">
+      <div className="relative my-3 h-64 w-64 rounded-full shadow-xl shadow-black dark:bg-gray-400">
+        <Image
+          src={data.avatar_url}
+          fill
+          className="rounded-full object-cover p-[2px]"
+          alt=""
+        />
       </div>
-      <div>
-        <h1>About</h1>
-      </div>
+      <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+        {data.name}
+      </h1>
+      <Link
+        href="https://github.com/TiagoAraujoDev"
+        target="_blank"
+        className="font-extralight leading-relaxed hover:underline hover:decoration-blue-400 hover:decoration-solid dark:text-gray-400"
+      >
+        @TiagoAraujo
+      </Link>
+      <UnderConstructionWarn />
     </div>
   );
 }
