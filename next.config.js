@@ -6,6 +6,7 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: ["avatars.githubusercontent.com"],
+    unoptimized: true,
   }
 };
 
