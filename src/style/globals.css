@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* TODO: min-height 100vh - footer */
-
 .min-height {
   min-height: calc(100vh - (72px + 72px)); 
 }

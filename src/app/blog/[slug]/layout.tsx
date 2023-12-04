@@ -2,7 +2,7 @@ import { allBlogs } from "contentlayer/generated";
 import { format, parseISO } from "date-fns";
 import Link from "next/link";
 
-import { Button } from "~/components/Button";
+import { LinkButton } from "~/components/LinkButton";
 
 interface PostLayoutProps {
   children: React.ReactNode;
@@ -86,7 +86,7 @@ async function PostLayout({ children, params }: PostLayoutProps) {
             </div>
           </div>
           <div className="h-6 w-auto pt-6">
-            <Button text="Back to blog" />
+            <LinkButton text="Back to blog" to="/blog" />
           </div>
         </aside>
         <div>{children}</div>

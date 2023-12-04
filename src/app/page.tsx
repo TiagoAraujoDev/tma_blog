@@ -1,8 +1,8 @@
 import { allBlogs } from "contentlayer/generated";
 import { compareDesc } from "date-fns";
 
-import { Button } from "~/components/Button";
 import { Hero } from "~/components/Hero";
+import { LinkButton } from "~/components/LinkButton";
 import { PostCard } from "~/components/PostCard";
 
 const LATEST_POSTS_QUANTITY = 5;
@@ -24,7 +24,7 @@ function Home() {
         {latestBlogposts.map((post, idx) => (
           <PostCard key={idx} {...post} />
         ))}
-        <Button text="See all posts" />
+        <LinkButton text="See all posts" to="/blog" />
       </section>
     </div>
   );

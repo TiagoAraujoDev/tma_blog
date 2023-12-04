@@ -1,12 +1,14 @@
 import Link from "next/link";
 import React from "react";
 
-interface ButtonComponentProps {
+interface LinkButtonComponentProps {
   text: string;
+  to: string;
 }
-const Button: React.FC<ButtonComponentProps> = ({ text }) => {
+
+const LinkButton: React.FC<LinkButtonComponentProps> = ({ text, to }) => {
   return (
-    <Link href="/blog" className="block w-fit font-bold text-gray-200">
+    <Link href={to} className="block w-fit font-bold text-gray-200">
       <div
         className="
         flex h-12 items-center justify-center rounded
@@ -21,4 +23,4 @@ const Button: React.FC<ButtonComponentProps> = ({ text }) => {
   );
 };
 
-export { Button };
+export { LinkButton };
