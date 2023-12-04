@@ -1,36 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Profile, Repository } from "~/@types/github";
 import { LinkButton } from "~/components/LinkButton";
 import { RepositoryCard } from "~/components/RepositoryCard";
 import { UnderConstructionWarn } from "~/components/UnderConstructionWarn";
-
-async function getGithubProfile(): Promise<Profile> {
-  const response = await fetch("https://api.github.com/users/TiagoAraujoDev", {
-    cache: "no-cache",
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
-    },
-  });
-  const profile = await response.json();
-
-  return profile;
-}
-
-async function getPinnedRepos(url: string): Promise<Repository[]> {
-  const response = await fetch(url, {
-    cache: "no-cache",
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
-    },
-  });
-  const repos: Repository[] = await response.json();
-
-  return repos.filter((repo) => {
-    return repo.topics.some((topic) => topic === "pinned");
-  });
-}
+import { getGithubProfile, getPinnedRepos } from "~/utils/requests";
 
 async function AboutPage() {
   const userProfile = await getGithubProfile();
@@ -52,13 +26,16 @@ async function AboutPage() {
       <Link
         href="https://github.com/TiagoAraujoDev"
         target="_blank"
-        className="font-extralight leading-relaxed hover:underline hover:decoration-blue-400 hover:decoration-solid dark:text-gray-400"
+        className="
+          font-extralight leading-relaxed hover:underline hover:decoration-blue-400
+          hover:decoration-solid dark:text-gray-400
+        "
       >
         @TiagoAraujo
       </Link>
       <div className="mx-4 my-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         {pinnedRepositories.map((repo) => {
-          return <RepositoryCard key={repo.id} repo={repo} />;
+          return <RepositoryCard key={repo.id} cardType="simple" repo={repo} />;
         })}
       </div>
       <LinkButton text="See projects with details" to="/projects" />
