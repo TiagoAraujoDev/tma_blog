@@ -27,6 +27,7 @@ const RepositoryCard: React.FC<RepositoryCardProps> = ({ repo, cardType }) => {
       <div className="flex items-center gap-2 divide-x-2 divide-gray-500">
         <Link
           href={repo.html_url}
+          target="_blank"
           className="flex items-center justify-start gap-2 text-blue-400 hover:text-blue-500"
         >
           <FaCodeBranch />
@@ -35,6 +36,7 @@ const RepositoryCard: React.FC<RepositoryCardProps> = ({ repo, cardType }) => {
         {!!repo.homepage && (
           <Link
             href={repo.homepage}
+            target="_blank"
             className="flex items-center justify-start gap-2 pl-2 text-blue-400 hover:text-blue-500"
           >
             <GrDeploy />
