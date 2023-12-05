@@ -50,7 +50,9 @@ const RepositoryCard: React.FC<RepositoryCardProps> = ({ repo, cardType }) => {
             <h2 className="mr-2 inline-block text-sm text-gray-700 dark:text-gray-300">
               Language:
             </h2>
-            <span>{repo.language}</span>
+            <span className="text-sm text-gray-300 underline">
+              {repo.language}
+            </span>
           </div>
           <div className="space-x-2">
             <span className="text-sm text-gray-700 dark:text-gray-300">

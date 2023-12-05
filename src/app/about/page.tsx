@@ -33,6 +33,9 @@ async function AboutPage() {
       >
         @TiagoAraujo
       </Link>
+      <div>
+        <p className="text-gray-200">description text</p>
+      </div>
       <div className="mx-4 my-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         {pinnedRepositories.map((repo) => {
           return <RepositoryCard key={repo.id} cardType="simple" repo={repo} />;

@@ -8,10 +8,14 @@ async function ProjectsPage() {
 
   return (
     <div className="min-height mx-auto flex max-w-5xl flex-col items-center">
-      <h1 className="py-8 text-4xl font-extrabold text-gray-900 dark:text-gray-100">
+      <h1
+        className="
+          px-10 py-8 text-center text-4xl font-extrabold text-gray-900 dark:text-gray-100 md:text-right
+        "
+      >
         What I&apos;m building or have built!
       </h1>
-      <p className="px-10 pb-3 text-gray-700 dark:text-gray-300">
+      <p className="px-10 pb-3 text-center text-gray-700 dark:text-gray-300">
         Here, you gonna find web development with Javascript, Typescript,
         React/Nextjs and Java. Some shells script plugins. Maybe in the future
         some game development just for fun.
