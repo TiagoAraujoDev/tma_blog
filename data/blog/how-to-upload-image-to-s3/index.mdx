@@ -1,0 +1,327 @@
+---
+title: "How to upload image to S3"
+description: "Let's build a webService to upload image to S3 bucket, and learn to handle multipart/form-data with multer"
+author: "TiagoAraujoDev"
+publishedAt: 2023-02-11
+tags:
+  - node
+  - typescript
+  - aws
+  - backend
+imageUrl: "/images/welcome_to_my_blog/thumbnail.png"
+---
+# Image upload to S3 bucket
+
+This is my take on how to implement a image uplaod feature in the most simple way, but
+in a way that is professional.
+
+## Let's setup the project
+
+To begin with, let's create a folder with the command:
+
+```sh
+user@linuxcomputer ~ $ mkdir upload-image-s3
+user@linuxcomputer ~ $ cd upload-image-s3
+```
+
+The first thing to do is to create a package.json, so we need to run the following command:
+
+```sh
+user@linuxcomputer ~/upload-image-s3 $ npm init -y
+```
+
+this will create the file package.json that manage all the project dependencies and some information.
+
+## Installing dependencies
+
+Usually, I don't install all dependencies at once, but for structure reasons I'm gonna do that. I typically install what I need as I need.
+For the dev dependencies run the command:
+
+```sh
+user@linuxcomputer ~/upload-image-s3 $ npm i typescript prisma tsx @types/express @types/node @types/multer @types/uuid -D
+```
+
+for the normal dependencies run:
+
+```sh
+user@linuxcomputer ~/upload-image-s3 $ npm i express multer @aws-sdk/client-s3 @aws-sdk/s3-request-presigner @prisma/client uuid dotenv
+```
+
+To be able to run and change the code and see the changes in a better way I gonna use tsx. You just need to add the following script to your **package.json**.
+
+```json title="package.json"
+"script": {   
+  "dev": "tsx watch --ignore node_modules ./src/server" 
+}
+```
+the watch parameter let tsx keep checking for changes and restart the application and the flag --ignore does what you think (ignore the node_modules folder).
+
+Now, run the following command to start the application
+
+```sh
+user@linuxcomputer ~/upload-image-s3 $ npx tsc --init 
+user@linuxcomputer ~/upload-image-s3 $ npm run dev 
+```
+
+But you'll get a error because there isn't a module /src/server as you may notice. And that's the next step.
+
+Create a folder named "src" in the root directory and inside the folder create a file named "server.ts" (or something else). In this article I'm not gonna follow any design pattern.
+
+As I did with the dependencies, I'm gonna dump all the code in one file to focus only on the image upload, but as I do on a project you can use clean architacture
+so your project would be extensible and more readble than mine.
+
+```ts title="src/server.ts"
+import dotenv from "dotenv";
+import express, { Request, Response } from "express";
+import multer from "multer";
+import path from "node:path";
+import fs from "node:fs/promises";
+import {
+  DeleteObjectCommand,
+  DeleteObjectCommandInput,
+  GetObjectCommand,
+  GetObjectCommandInput,
+  PutObjectCommand,
+  PutObjectCommandInput,
+  S3Client,
+} from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { PrismaClient } from "@prisma/client";
+import { v4 as uuid } from "uuid";
+
+import { multerConfig } from "./multerConfig";
+
+dotenv.config();
+
+const bucketRegion = process.env.BUCKET_REGION;
+const bucketName = process.env.BUCKET_NAME;
+const accessKey = process.env.ACCESS_KEY;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+
+const app = express();
+
+const prisma = new PrismaClient();
+
+const s3 = new S3Client({
+  credentials: {
+    accessKeyId: accessKey!,
+    secretAccessKey: secretAccessKey!,
+  },
+  region: bucketRegion,
+});
+
+app.use(express.json());
+app.use("/", express.static("./tmp/"));
+
+const avatarUpload = multer(multerConfig);
+
+app.post("/user", async (req: Request, res: Response) => {
+  const { name } = req.body;
+
+  const id = uuid();
+  const newUser = await prisma.user.create({
+    data: {
+      id,
+      name,
+    },
+  });
+
+  return res.status(201).json(newUser);
+});
+
+app.get("/user", async (req: Request, res: Response) => {
+  const users = await prisma.user.findMany();
+  res.json(users);
+});
+
+/*
+ * GET request needs a database to access the imageName
+ * saved in the POST request.
+ */
+app.get("/user/avatar", async (req: Request, res: Response) => {
+  const { user_id } = req.body;
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: user_id,
+    },
+  });
+
+  const params: GetObjectCommandInput = {
+    Bucket: bucketName,
+    Key: user?.avatar!,
+  };
+  const command = new GetObjectCommand(params);
+  const url = await getSignedUrl(s3, command, { expiresIn: 3600 * 24 });
+
+  return res.json({ url });
+});
+
+/*
+ * Needs to save the imageName with a userId in the database
+ */
+app.post(
+  "/user/avatar/upload",
+  avatarUpload.single("avatar"),
+  async (req: Request, res: Response) => {
+    const { user_id } = req.headers;
+    const file = req.file;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: user_id as string,
+      },
+    });
+
+    if (!user) {
+      throw Error("User not found!");
+    }
+
+    if (!user.avatar) {
+      const dirName = path.resolve(multerConfig.tmpFolder, file?.filename!);
+      const fileContent = await fs.readFile(dirName);
+      console.log(fileContent);
+
+      const putParams: PutObjectCommandInput = {
+        Bucket: bucketName,
+        Key: file?.filename,
+        Body: fileContent,
+        ContentType: file?.mimetype,
+      };
+      const putCommand = new PutObjectCommand(putParams);
+      s3.send(putCommand);
+
+      const getParams: GetObjectCommandInput = {
+        Bucket: bucketName,
+        Key: file?.filename,
+      };
+      const getCommand = new GetObjectCommand(getParams);
+
+      const url = await getSignedUrl(s3, getCommand, { expiresIn: 3600 * 24 });
+
+      await prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          avatar: file?.filename!,
+        },
+      });
+
+      await fs.unlink(dirName);
+
+      return res.json({
+        url,
+      });
+    }
+    return res.status(400).json({ message: "user already has an avatar" });
+  }
+);
+
+/*
+ * DELETE request needs the userId to identify the imageName
+ * to delete from S3
+ * Uses the DeleteObjectCommand from "@aws-sdk/client-s3"
+ */
+app.delete("/user/avatar/delete", async (req: Request, res: Response) => {
+  const { user_id } = req.body;
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: user_id,
+    },
+  });
+
+  const params: DeleteObjectCommandInput = {
+    Bucket: bucketName,
+    Key: user?.avatar!,
+  };
+  const command = new DeleteObjectCommand(params);
+  await s3.send(command);
+
+  await prisma.user.update({
+    where: {
+      id: user_id,
+    },
+    data: {
+      avatar: null,
+    },
+  });
+
+  return res.sendStatus(204);
+});
+
+app.listen(8080, () => console.log("Server running on port 8080"));
+```
+
+I want to comment some details that I did in the image above. First is dotenv, we gonna set some environment variables to S3, so we need to import dotenv and call the config method, and second multerConfig is exported from the the second file that I gonna comment about in the next section.
+
+## Multer
+
+The first thing to do is to setup multer. Multer is a third part middleware that can handle multipart/form-data. The client can send a request with a multipart/form-data content-type and you can access the content and all his information in a object (file/files) attached to the request.
+
+```ts title="src/multerConfig.ts"
+import multer from "multer";
+import path from "node:path";
+import crypto from "node:crypto";
+
+const tmpFolder = path.join(__dirname, "..", "tmp");
+console.log(tmpFolder);
+
+export const multerConfig = {
+  tmpFolder,
+  storage: multer.diskStorage({
+    destination: `${tmpFolder}`,
+    filename: (req, file, callback) => {
+      const fileHash = crypto.randomBytes(16).toString("hex");
+      const fileName = `${fileHash}-${file.originalname}`;
+
+      return callback(null, fileName);
+    }
+  })
+};
+```
+This is a very basic configuration. First you need to create a tmp/ folder in the root directory and create a variable that receives the full path to tmp/ using path.join(). The destination property is where multer is going to save the file temporally and the filename receives a function that has three parameters, the request, the file object and a callback function. In this case I hashed the filename to make the name unique and the function return the callback function with two arguments, the first is a error set to null and the second is the filename.
+
+* You can create your own strategy to name the file
+
+## Prisma
+
+Prisma is a ORM (Object Relation Mapping) that helps with the database connection and queries. The Prisma setup is one of the most easiest to do. You can just follow their [getting-started](https://www.prisma.io/docs/getting-started/quickstart). First initialize Prisma:
+
+```sh
+user@linuxcomputer ~ $ npx prisma init --datasource-provider sqlite
+```
+
+Now you can create the model that is basically a table in the database. You can do that in the **prisma/schema.prisma**.
+
+```prisma title="prisma/schema.prisma"
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id     String  @id()
+  name   String
+  avatar String?
+
+  @@map("users")
+}
+```
+
+*in the future I'll write a post with more details about Prisma and TypeORM
+
+To finish Prisma setup notice that we instanciated Prisma with the code bellow.
+
+```ts title="src/server.ts"
+const prisma = new PrismaClient();
+```
+
+## S3
+
+S3 is a cloud service offered by AWS that allowed you to save "objects" in the cloud. I gonna give a brief explanation on how to create a bucket in S3. First login on an AWS account and go to dashboard and click in S3.
