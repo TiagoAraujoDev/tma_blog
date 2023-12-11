@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { LinkButton } from "~/components/LinkButton";
 import { RepositoryCard } from "~/components/RepositoryCard";
+import { SocialLinks } from "~/components/SocialLinks";
 import { UnderConstructionWarn } from "~/components/UnderConstructionWarn";
 import { getGithubProfile, getPinnedRepos } from "~/utils/requests";
 
@@ -34,6 +35,7 @@ async function AboutPage() {
         >
           @TiagoAraujo
         </Link>
+        <SocialLinks />
       </div>
       <section>
         <h2 className="text-2xl font-extrabold text-gray-800 dark:text-gray-200">
