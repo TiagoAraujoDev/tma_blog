@@ -12,7 +12,7 @@ imageUrl: "/images/welcome_to_my_blog/thumbnail.png"
 ---
 # Image upload to S3 bucket
 
-This is my take on how to implement a image uplaod feature in the most simple way, but
+This is my take on how to implement a image upload feature in the most simple way, but
 in a way that is professional.
 
 ## Let's setup the project
@@ -30,7 +30,7 @@ The first thing to do is to create a package.json, so we need to run the followi
 user@linuxcomputer ~/upload-image-s3 $ npm init -y
 ```
 
-this will create the file package.json that manage all the project dependencies and some information.
+this will create the file package.json that manage all the project dependencies and some project information.
 
 ## Installing dependencies
 
@@ -63,12 +63,12 @@ user@linuxcomputer ~/upload-image-s3 $ npx tsc --init
 user@linuxcomputer ~/upload-image-s3 $ npm run dev 
 ```
 
-But you'll get a error because there isn't a module /src/server as you may notice. And that's the next step.
+But you'll get a error because didn't create the file _**./src/server.ts**_ as you may notice. And that's our next step.
 
 Create a folder named "src" in the root directory and inside the folder create a file named "server.ts" (or something else). In this article I'm not gonna follow any design pattern.
 
-As I did with the dependencies, I'm gonna dump all the code in one file to focus only on the image upload, but as I do on a project you can use clean architacture
-so your project would be extensible and more readble than mine.
+As I did with the dependencies, I'm gonna dump all the code in one file to focus only on the image upload, but as I do on a project you should structure your project in a way
+that make it more extensible and readable.
 
 ```ts title="src/server.ts"
 import dotenv from "dotenv";
@@ -254,11 +254,13 @@ app.delete("/user/avatar/delete", async (req: Request, res: Response) => {
 app.listen(8080, () => console.log("Server running on port 8080"));
 ```
 
-I want to comment some details that I did in the image above. First is dotenv, we gonna set some environment variables to S3, so we need to import dotenv and call the config method, and second multerConfig is exported from the the second file that I gonna comment about in the next section.
+I want to comment some details that I did in the image above. First is dotenv, we gonna set some environment variables to S3, so we need to import dotenv and call the config method,
+and second multerConfig is exported from the the second file that I gonna comment about in the next section.
 
 ## Multer
 
-The first thing to do is to setup multer. Multer is a third part middleware that can handle multipart/form-data. The client can send a request with a multipart/form-data content-type and you can access the content and all his information in a object (file/files) attached to the request.
+The first thing to do is to setup multer. Multer is a third part middleware that can handle multipart/form-data. The client can send a request with a multipart/form-data content-type
+and you can access the content and all its information in a object (file/files) attached to the request.
 
 ```ts title="src/multerConfig.ts"
 import multer from "multer";
@@ -281,13 +283,17 @@ export const multerConfig = {
   })
 };
 ```
-This is a very basic configuration. First you need to create a tmp/ folder in the root directory and create a variable that receives the full path to tmp/ using path.join(). The destination property is where multer is going to save the file temporally and the filename receives a function that has three parameters, the request, the file object and a callback function. In this case I hashed the filename to make the name unique and the function return the callback function with two arguments, the first is a error set to null and the second is the filename.
+This is a very basic configuration. First you need to create a tmp/ folder in the root directory and create a variable that receives the full path to tmp/ using path.join().
+The destination property is where multer is going to save the file temporarily, and the filename receives a function that has three parameters, the request, the file object
+and a callback function. In this case I hashed the filename to make sure the name is unique, and the function return the callback function with two arguments, the first is an error
+that in this case is we pass as null and the second is the filename.
 
-* You can create your own strategy to name the file
+* You could create your own strategy to create a filename
 
 ## Prisma
 
-Prisma is a ORM (Object Relation Mapping) that helps with the database connection and queries. The Prisma setup is one of the most easiest to do. You can just follow their [getting-started](https://www.prisma.io/docs/getting-started/quickstart). First initialize Prisma:
+Prisma is a ORM (Object Relation Mapping) that helps with the database connection and queries. The Prisma setup is one of the most easiest to do. You can just follow their
+[getting-started](https://www.prisma.io/docs/getting-started/quickstart). First initialize Prisma:
 
 ```sh
 user@linuxcomputer ~ $ npx prisma init --datasource-provider sqlite
@@ -324,4 +330,4 @@ const prisma = new PrismaClient();
 
 ## S3
 
-S3 is a cloud service offered by AWS that allowed you to save "objects" in the cloud. I gonna give a brief explanation on how to create a bucket in S3. First login on an AWS account and go to dashboard and click in S3.
+S3 is a cloud service offered by **AWS** that allowed you to save "objects" in the cloud. I gonna give a brief explanation on how to create a bucket in S3. First login on an AWS account and go to dashboard and click in S3.
