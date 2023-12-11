@@ -11,9 +11,18 @@ async function AboutPage() {
   const pinnedRepositories = await getPinnedRepos(userProfile.repos_url);
 
   return (
-    <div className="min-height mx-auto my-8 grid max-w-[1280px] grid-rows-[auto_1fr] gap-4 px-6 lg:grid-cols-[240px_1fr] lg:grid-rows-[min-content] lg:px-10">
+    <div
+      className="min-height mx-auto my-8 grid max-w-[1280px] grid-rows-[auto_1fr]
+      gap-4 px-6 lg:grid-cols-[240px_1fr] lg:grid-rows-[min-content] lg:px-10
+      "
+    >
       <div className="flex flex-col items-center">
-        <div className="relative mx-auto mb-6 h-52 w-52 rounded-full shadow-xl shadow-black dark:bg-gray-400">
+        <div
+          className="
+          relative mx-auto mb-6 h-52 w-52 rounded-full shadow-xl shadow-black
+          dark:bg-gray-400
+          "
+        >
           <Image
             src={userProfile.avatar_url}
             fill
@@ -44,7 +53,14 @@ async function AboutPage() {
           <p className="text-lg text-gray-700 dark:text-gray-200">
             Welcome to tmablog! This blog serves as a playground for me to
             experiment with ideas and share some of my findings. For more
-            information, check out my LinkedIn profile.
+            information, check out my{" "}
+            <Link
+              href="https://www.linkedin.com/in/tiago-muniz-de-araujo-2b5b8a89/"
+              className="text-blue-400 underline hover:text-blue-500"
+            >
+              LinkedIn
+            </Link>{" "}
+            profile.
           </p>
           <p className="text-lg text-gray-700 dark:text-gray-200">
             I very much enjoy discorvering new things and try another way to do

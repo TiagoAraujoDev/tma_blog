@@ -2,9 +2,12 @@ import { Profile, Repository } from "~/@types/github";
 
 async function getGithubProfile(): Promise<Profile> {
   const response = await fetch("https://api.github.com/users/TiagoAraujoDev", {
-    cache: "no-cache",
+    cache: "force-cache",
     headers: {
       Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+    },
+    next: {
+      revalidate: 60 * 60 * 24,
     },
   });
   const profile = await response.json();
@@ -14,9 +17,12 @@ async function getGithubProfile(): Promise<Profile> {
 
 async function getPinnedRepos(url: string): Promise<Repository[]> {
   const response = await fetch(url, {
-    cache: "no-cache",
+    cache: "force-cache",
     headers: {
       Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+    },
+    next: {
+      revalidate: 60 * 60 * 24,
     },
   });
   const repos: Repository[] = await response.json();
