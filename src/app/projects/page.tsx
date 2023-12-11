@@ -1,5 +1,4 @@
 import { RepositoryCard } from "~/components/RepositoryCard";
-import { UnderConstructionWarn } from "~/components/UnderConstructionWarn";
 import { getGithubProfile, getPinnedRepos } from "~/utils/requests";
 
 async function ProjectsPage() {
@@ -27,7 +26,6 @@ async function ProjectsPage() {
           );
         })}
       </div>
-      <UnderConstructionWarn />
     </div>
   );
 }

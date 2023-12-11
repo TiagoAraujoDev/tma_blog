@@ -4,7 +4,6 @@ import Link from "next/link";
 import { LinkButton } from "~/components/LinkButton";
 import { RepositoryCard } from "~/components/RepositoryCard";
 import { SocialLinks } from "~/components/SocialLinks";
-import { UnderConstructionWarn } from "~/components/UnderConstructionWarn";
 import { getGithubProfile, getPinnedRepos } from "~/utils/requests";
 
 async function AboutPage() {
@@ -26,7 +25,7 @@ async function AboutPage() {
           {userProfile.name}
         </h1>
         <Link
-          href="https://github.com/TiagoAraujoDev"
+          href={`mailto:${userProfile.email}`}
           target="_blank"
           className="
           font-extralight leading-relaxed hover:underline hover:decoration-blue-400
@@ -65,7 +64,6 @@ async function AboutPage() {
         </div>
         <LinkButton text="See projects with details" to="/projects" />
       </section>
-      <UnderConstructionWarn />
     </div>
   );
 }
