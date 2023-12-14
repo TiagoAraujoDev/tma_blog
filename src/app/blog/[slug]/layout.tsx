@@ -3,6 +3,7 @@ import { format, parseISO } from "date-fns";
 import Link from "next/link";
 
 import { LinkButton } from "~/components/LinkButton";
+import { ToTheTopButton } from "~/components/ToTheToButton";
 
 interface PostLayoutProps {
   children: React.ReactNode;
@@ -17,7 +18,7 @@ async function PostLayout({ children, params }: PostLayoutProps) {
   );
 
   return (
-    <section className="min-height mx-4 sm:mx-8 md:mx-10">
+    <section className="min-height relative mx-4 sm:mx-8 md:mx-10">
       <div className="flex flex-col items-center pt-8">
         <time
           dateTime={post?.publishedAt}
@@ -91,6 +92,7 @@ async function PostLayout({ children, params }: PostLayoutProps) {
         </aside>
         <div>{children}</div>
       </div>
+      <ToTheTopButton />
     </section>
   );
 }
