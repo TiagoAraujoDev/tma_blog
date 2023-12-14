@@ -31,7 +31,7 @@ async function PostLayout({ children, params }: PostLayoutProps) {
         <p className="max-w-md text-center text-gray-700 dark:text-gray-300">
           {post?.description}
         </p>
-        <div className="flex items-center gap-2 py-3 md:hidden">
+        <div className="flex items-center gap-2 py-3 lg:hidden">
           <img
             src="https://avatars.githubusercontent.com/TiagoAraujoDev"
             className="h-12 w-12 rounded-full border border-gray-800"
@@ -50,9 +50,9 @@ async function PostLayout({ children, params }: PostLayoutProps) {
       </div>
 
       <div className="my-4 h-[2px] w-full bg-gray-500 dark:bg-gray-700" />
-      <div className="my-6 grid grid-cols-1 grid-rows-[1fr_auto] md:grid-cols-layout">
-        <aside className="row-start-2 mb-8 divide-y-2 divide-gray-500 dark:divide-gray-700 md:row-auto">
-          <div className="hidden items-center gap-2 py-3 md:flex">
+      <div className="my-6 grid grid-cols-1 grid-rows-[1fr_auto] lg:grid-cols-layout">
+        <aside className="row-start-2 mb-8 divide-y-2 divide-gray-500 dark:divide-gray-700 lg:row-auto">
+          <div className="hidden items-center gap-2 py-3 lg:flex">
             <img
               src="https://avatars.githubusercontent.com/TiagoAraujoDev"
               className="h-12 w-12 rounded-full border border-gray-800"
