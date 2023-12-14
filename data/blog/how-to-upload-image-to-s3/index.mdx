@@ -362,3 +362,286 @@ First login on an AWS account and go to dashboard and click in S3.
 Now click on the big orange button...
 
 ![s3_2](/images/how-to-upload-image-to-s3/s3_2.png)
+
+Give a unique name and choose a region near to you and click **_"create a bucket"_**
+on the bottom of the page
+
+![s3_3](/images/how-to-upload-image-to-s3/s3_3.png)
+
+Now in your **_".env"_** add variable with the name and the region that you chose
+
+```env title=".env"
+BUCKET_NAME=
+BUCKET_REGION="eu-west-3"
+```
+
+Now go back to the home page and click on the **IAM** and select "policies" option
+and then go to **"Create a Policy"**.
+
+Set the service to S3 and the actions are:
+- Read -> GetObject;
+- write -> PutObject, DeleteObject.
+
+![s3_4](/images/how-to-upload-image-to-s3/s3_4.png)
+
+Now for Amazon Resource Names (ARNs) uniquely identify AWS resources you just need
+to put the bucket name and select _any_ for object name and click **"add"**
+
+![s3_5](/images/how-to-upload-image-to-s3/s3_5.png)
+
+Now just click next and next again. In the last step just give the Policy a name
+like **"haha-test-access"** and click **"create policy"**. Now you need to create a user
+to access the bucket. Go back to **IAM** and click on **"Users"** and then **"Add user"** and
+the first step give the user a name like **"haha-test-s3"**.
+
+![s3_6](/images/how-to-upload-image-to-s3/s3_6.png)
+
+In the next step you're going to set permissions. Select **"Attach policies directly"**
+and find the policy that you create.
+
+![s3_7](/images/how-to-upload-image-to-s3/s3_7.png)
+
+After that on the bottom of the page click **"create user"**.
+
+Access the user and you'll see the following page, now click on **"security credentials"**.
+
+![s3_8](/images/how-to-upload-image-to-s3/s3_8.png)
+
+Scroll down the page till you find **"Access keys"** . Just click
+**"create access key"** , select the option as I did in the next image and click
+**"next"**.
+
+![s3_9](/images/how-to-upload-image-to-s3/s3_9.png)
+
+In the next step click as I did in the image bellow
+
+![s3_10](/images/how-to-upload-image-to-s3/s3_10.png)
+
+The last step is to retrieve the access keys and put in your **_.env_**
+
+![s3_11](/images/how-to-upload-image-to-s3/s3_11.png)
+
+```env title=".env"
+ACCESS_KEY=
+SECRET_ACCESS_KEY=
+```
+
+That's it for S3, now let's get back to the code.
+
+First lets retrieve the environment variables and instanciated the **S3 client**.
+
+```ts title="src/server.ts"
+const bucketRegion = process.env.BUCKET_REGION;
+const bucketName = process.env.BUCKET_NAME;
+const accessKey = process.env.ACCESS_KEY;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+
+const s3 = new S3Client({
+  credentials: {
+    accessKeyId: accessKey!,
+    secretAccessKey: secretAccessKey!,
+  },
+  region: bucketRegion,
+});
+```
+
+## Routing
+
+Let's create the endpoints and their logic.
+
+First of all, setup the express server.
+
+
+```ts title="src/server.ts"
+const app = express();
+app.use(express.json());
+app.use("/", express.static("./tmp/"));
+
+const avatarUpload = multer(multerConfig);
+
+app.listen(8080, () => console.log("server running on port 8080"));
+```
+
+and you can create all the routes before the **app.listen()**.
+
+The first route it's going to be the one that creates an user.
+
+* _I'm not going to do any validation on this demonstration, I want to keep as
+simple as possible._
+
+```ts title="src/server.ts"
+app.post("/user", async (req: Request, res: Response) => {
+  const { name } = req.body;
+
+  const id = uuid();
+  const newUser = await prisma.user.create({
+    data: {
+      id,
+      name,
+    },
+  });
+
+  return res.status(201).json(newUser);
+});
+```
+
+Now to fetch the user
+
+```ts title="src/server.ts"
+app.get("/user", async (req: Request, res: Response) => {
+  const users = await prisma.user.findMany();
+  res.json(users);
+});
+```
+
+To upload the image to S3 and save the filename for reference copy the code bellow.
+
+```ts title="src/server.ts"
+/*
+ * Needs to save the imageName with a userId in the database
+ */
+app.post(
+  "/user/avatar/upload",
+  avatarUpload.single("avatar"),
+  async (req: Request, res: Response) => {
+    const { user_id } = req.headers;
+    const file = req.file;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: user_id as string,
+      },
+    });
+
+    if (!user) {
+      throw Error("User not found!");
+    }
+
+    if (!user.avatar) {
+      const dirName = path.resolve(multerConfig.tmpFolder, file?.filename!);
+      const fileContent = await fs.readFile(dirName);
+      console.log(fileContent);
+
+      const putParams: PutObjectCommandInput = {
+        Bucket: bucketName,
+        Key: file?.filename,
+        Body: fileContent,
+        ContentType: file?.mimetype,
+      };
+      const putCommand = new PutObjectCommand(putParams);
+      s3.send(putCommand);
+
+      const getParams: GetObjectCommandInput = {
+        Bucket: bucketName,
+        Key: file?.filename,
+      };
+      const getCommand = new GetObjectCommand(getParams);
+
+      const url = await getSignedUrl(s3, getCommand, { expiresIn: 3600 * 24 });
+
+      await prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          avatar: file?.filename!,
+        },
+      });
+
+      await fs.unlink(dirName);
+
+      return res.json({
+        url,
+      });
+    }
+    return res.status(400).json({ message: "user already has an avatar" });
+  }
+);
+```
+First thing to notice is the middleware added in the
+**app.post("/user/avatar/upload", avatarUpload.single("avatar"))** will treat the
+multipart/form-data and save the avatar picture in the tmp/ with the hashed name.
+After that, the next function is called and we can do all the logic to save the 
+picture in the S3 bucket, save the filename in the database and delete it from 
+the tmp/. One thing to mention is that the **putParams.Body** only receives a buffer 
+data, I used the **path.resolve** to get the file path and the the **fsPromise.readFile** 
+to return data as a buffer object. Now just create a putParams and create a 
+command with the **PutObjectCommand** and then call the send method with the command 
+using the S3 instance. To delete the file from the tmp/ folder just call the 
+_unlink_ method from fsPromise passing the file path. And I think the logic to 
+update the user avatar filename in the database is pretty simple.
+
+Get the signed **URL** from the user avatar
+
+```ts title="src/server.ts"
+/*
+ * GET request needs a database to access the imageName
+ * saved in the POST request.
+ */
+app.get("/user/avatar", async (req: Request, res: Response) => {
+  const { user_id } = req.body;
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: user_id,
+    },
+  });
+
+  const params: GetObjectCommandInput = {
+    Bucket: bucketName,
+    Key: user?.avatar!,
+  };
+  const command = new GetObjectCommand(params);
+  const url = await getSignedUrl(s3, command, { expiresIn: 3600 * 24 });
+
+  return res.json({ url });
+});
+```
+
+You need to receive the user_id from the request body and them find the user now
+just create a params object with the bucket name and filename from user.avatar. 
+Create the command and call the **getSignedUrl()** method.
+
+And the last endpoint is to delete the image from the S3 bucket and from the database.
+
+```ts title="src/server.ts"
+/*
+ * DELETE request needs the userId to identify the imageName
+ * to delete from S3
+ * Uses the DeleteObjectCommand from "@aws-sdk/client-s3"
+ */
+app.delete("/user/avatar/delete", async (req: Request, res: Response) => {
+  const { user_id } = req.body;
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: user_id,
+    },
+  });
+
+  const params: DeleteObjectCommandInput = {
+    Bucket: bucketName,
+    Key: user?.avatar!,
+  };
+  const command = new DeleteObjectCommand(params);
+  await s3.send(command);
+
+  await prisma.user.update({
+    where: {
+      id: user_id,
+    },
+    data: {
+      avatar: null,
+    },
+  });
+
+  return res.sendStatus(204);
+});
+```
+There isn't nothing to comment about, is pretty similar to the get URL.
+Now you can use insomnia or postman to test the application.
+
+For more details you can check all the source code in my Github
+([link to the repo](https://github.com/TiagoAraujoDev/Multer_Test)).
+
+> Keep striving for progress, not perfection. And always remember a little progress everyday goes a long way!
