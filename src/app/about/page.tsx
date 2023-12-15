@@ -37,11 +37,15 @@ async function AboutPage() {
           href={`mailto:${userProfile.email}`}
           target="_blank"
           className="
-          font-extralight leading-relaxed hover:underline hover:decoration-blue-400
-          hover:decoration-solid dark:text-gray-400
+          p-2 font-extralight leading-relaxed hover:underline
+          hover:decoration-blue-400 hover:decoration-solid dark:text-gray-400
         "
         >
-          @TiagoAraujo
+          <img
+            src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white"
+            className="overflow-hidden rounded"
+            alt="email"
+          />
         </Link>
         <SocialLinks />
       </div>
@@ -63,8 +67,8 @@ async function AboutPage() {
             profile.
           </p>
           <p className="text-lg text-gray-700 dark:text-gray-200">
-            I very much enjoy discorvering new things and try another way to do
-            things. If you find one of my projects interessting, feel free to
+            I really like discovering new things and finding new ways to solve a
+            problem. If you find one of my projects interesting, feel free to
             contribute, just fork and add something! 😁
           </p>
         </div>
