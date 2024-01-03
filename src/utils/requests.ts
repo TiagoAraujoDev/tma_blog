@@ -15,7 +15,7 @@ async function getGithubProfile(): Promise<Profile> {
 }
 
 async function getPinnedRepos(url: string): Promise<Repository[]> {
-  const response = await fetch(url, {
+  const response = await fetch(`${url}?per_page=60`, {
     headers: {
       Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
     },
